@@ -2,5 +2,5 @@
 // Dashboard -> Project Settings -> API -> Project URL / anon public key
 // It is safe for these to be public in a static site: the anon key only
 // grants what your Row Level Security policies (schema.sql) allow.
-const SUPABASE_URL = "https://zfqytzxkqrztmptbqvmv.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://zfqytzxkqrztmptbqvmv.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_TXTHtvYTYUvmnvYeoNLnpg_Y5JP4z49";
