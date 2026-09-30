@@ -613,13 +613,39 @@ function openSpareModal(id){
   document.getElementById('spEditDateRequest').value = r.date_request || '';
   document.getElementById('spEditRequests').value = r.requests || '';
   document.getElementById('spEditRemarks').value = r.remarks || '';
+  document.getElementById('spRequestsView').innerHTML = renderRequestItems(r.requests);
 
   const canEdit = canManage();
-  ['spEditPlate','spEditDpcn','spEditDept','spEditEndUser','spEditDateRequest','spEditRequests','spEditRemarks']
+  ['spEditPlate','spEditDpcn','spEditDept','spEditEndUser','spEditDateRequest','spEditRemarks']
     .forEach(id=>{ document.getElementById(id).disabled = !canEdit; });
   document.getElementById('spEditSaveBtn').style.display = canEdit ? '' : 'none';
 
+  // Requests always starts as the bulleted view; only Staff/Supervisor get
+  // the option to switch into raw-text editing via the toggle below it.
+  document.getElementById('spRequestsView').style.display = '';
+  document.getElementById('spRequestsEditWrap').style.display = 'none';
+  document.getElementById('spRequestsEditToggle').style.display = canEdit ? '' : 'none';
+  document.getElementById('spRequestsEditToggle').textContent = 'Edit list';
+
   document.getElementById('spModalBackdrop').classList.add('active');
+}
+
+function toggleSpareRequestsEdit(){
+  const view = document.getElementById('spRequestsView');
+  const editWrap = document.getElementById('spRequestsEditWrap');
+  const toggle = document.getElementById('spRequestsEditToggle');
+  const nowEditing = editWrap.style.display === 'none';
+  if(nowEditing){
+    view.style.display = 'none';
+    editWrap.style.display = '';
+    toggle.textContent = 'Done editing';
+  }else{
+    document.getElementById('spEditRequests').dispatchEvent(new Event('change'));
+    view.innerHTML = renderRequestItems(document.getElementById('spEditRequests').value);
+    view.style.display = '';
+    editWrap.style.display = 'none';
+    toggle.textContent = 'Edit list';
+  }
 }
 
 function closeSpareModal(){

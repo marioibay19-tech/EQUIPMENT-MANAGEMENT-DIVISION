@@ -334,7 +334,14 @@
       <div class="field"><label>End-user</label><input type="text" id="spEditEndUser"></div>
     </div>
     <div class="field"><label>Date Request</label><input type="date" id="spEditDateRequest"></div>
-    <div class="field"><label>Requests</label><textarea id="spEditRequests" style="min-height:90px;"></textarea></div>
+    <div class="field">
+      <label>Requests</label>
+      <div id="spRequestsView" class="requests-view"></div>
+      <div id="spRequestsEditWrap" style="display:none; margin-top:8px;">
+        <textarea id="spEditRequests" style="min-height:90px;"></textarea>
+      </div>
+      <button type="button" class="link-btn" id="spRequestsEditToggle" style="margin-top:8px; display:none;" onclick="toggleSpareRequestsEdit()">Edit list</button>
+    </div>
     <div class="field"><label>Remarks</label><textarea id="spEditRemarks"></textarea></div>
     <div style="display:flex; gap:10px;">
       <button class="btn" id="spEditSaveBtn" onclick="saveSpareEdit()">Save Changes</button>
