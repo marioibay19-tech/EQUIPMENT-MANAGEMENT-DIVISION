@@ -101,6 +101,19 @@ tr.overdue td{ background:var(--stop-soft); }
 .modal{ background:var(--panel); border-radius:8px; padding:26px; width:520px; max-width:92vw; max-height:88vh; overflow-y:auto; }
 .modal h3{ margin:0 0 18px; font-size:16px; }
 textarea{ width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:5px; font-size:14px; background:var(--paper); color:var(--ink); font-family:var(--sans); resize:vertical; min-height:60px; }
+#printArea{ display:none; }
+@media print{
+  body *{ visibility:hidden; }
+  #printArea, #printArea *{ visibility:visible; }
+  #printArea{ display:block; position:absolute; top:0; left:0; width:100%; padding:30px; }
+  #printArea h2{ margin:0 0 2px; font-size:18px; }
+  #printArea .p-sub{ color:#555; font-size:12px; margin:0 0 18px; }
+  #printArea table{ width:100%; border-collapse:collapse; margin-top:6px; }
+  #printArea td{ padding:6px 4px; border-bottom:1px solid #ccc; font-size:13px; vertical-align:top; }
+  #printArea td.p-label{ width:160px; color:#555; font-weight:600; }
+  #printArea .p-sig{ margin-top:50px; display:flex; justify-content:space-between; }
+  #printArea .p-sig div{ width:45%; border-top:1px solid #333; padding-top:6px; font-size:12px; text-align:center; color:#333; }
+}
 .auth-screen{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, var(--navy) 0%, var(--navy) 220px, var(--paper) 220px); }
 .auth-card{ background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:36px; width:380px; max-width:92vw; box-shadow:0 10px 30px rgba(11,61,98,.18); border-top:4px solid var(--accent); }
 .auth-card h1{ font-size:19px; margin:0; font-weight:700; color:var(--navy); }

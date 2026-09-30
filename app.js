@@ -549,11 +549,11 @@ document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
 function renderSpareParts(){
   const body = document.getElementById('sparePartsBody');
   if(!allSpareParts.length){
-    body.innerHTML = '<tr><td colspan="7" class="empty">No spare parts requests yet</td></tr>';
+    body.innerHTML = '<tr><td colspan="8" class="empty">No spare parts requests yet</td></tr>';
     return;
   }
   body.innerHTML = allSpareParts.map(r=>`
-    <tr style="cursor:pointer;" onclick="openSpareModal('${r.id}')">
+    <tr>
       <td>${r.date_request||'—'}</td>
       <td class="mono">${r.plate||''}</td>
       <td class="mono">${r.dpcn||'—'}</td>
@@ -561,6 +561,7 @@ function renderSpareParts(){
       <td>${r.end_user||'—'}</td>
       <td style="max-width:220px; font-size:12.5px;">${renderRequestItems(r.requests)}</td>
       <td class="notes-cell" title="${(r.remarks||'').replace(/"/g,'&quot;')}">${r.remarks||'—'}</td>
+      <td><button class="link-btn" onclick="openSpareModal('${r.id}')">View</button></td>
     </tr>`).join('');
 }
 
@@ -624,6 +625,35 @@ function openSpareModal(id){
 function closeSpareModal(){
   editingSpareId = null;
   document.getElementById('spModalBackdrop').classList.remove('active');
+}
+
+function printSpareRequest(){
+  if(!editingSpareId) return;
+  const r = allSpareParts.find(x=>x.id===editingSpareId);
+  if(!r) return;
+
+  const itemsHtml = renderRequestItems(r.requests);
+  const printArea = document.getElementById('printArea');
+  printArea.innerHTML = `
+    <div style="font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#555;">Republic of the Philippines · Department of Public Works and Highways</div>
+    <h2>Spare Parts Request</h2>
+    <p class="p-sub">Equipment Management Division — Fleet Maintenance Log</p>
+    <table>
+      <tr><td class="p-label">Date Request</td><td>${r.date_request||'—'}</td></tr>
+      <tr><td class="p-label">Plate Number</td><td>${escapeHtml(r.plate||'—')}</td></tr>
+      <tr><td class="p-label">DPCN</td><td>${escapeHtml(r.dpcn||'—')}</td></tr>
+      <tr><td class="p-label">Department</td><td>${escapeHtml(r.department||'—')}</td></tr>
+      <tr><td class="p-label">End-user</td><td>${escapeHtml(r.end_user||'—')}</td></tr>
+      <tr><td class="p-label">Requests</td><td>${itemsHtml}</td></tr>
+      <tr><td class="p-label">Remarks</td><td>${escapeHtml(r.remarks||'—')}</td></tr>
+    </table>
+    <div class="p-sig">
+      <div>Requested by</div>
+      <div>Approved by</div>
+    </div>
+  `;
+
+  window.print();
 }
 
 async function saveSpareEdit(){

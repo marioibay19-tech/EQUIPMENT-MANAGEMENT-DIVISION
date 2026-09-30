@@ -253,8 +253,8 @@
 
       <div class="panel" style="margin-top:28px; padding:0; overflow-x:auto;">
         <table>
-          <thead><tr><th>Date</th><th>Plate</th><th>DPCN</th><th>Department</th><th>End-user</th><th>Requests</th><th>Remarks</th></tr></thead>
-          <tbody id="sparePartsBody"><tr><td colspan="7" class="empty">No spare parts requests yet</td></tr></tbody>
+          <thead><tr><th>Date</th><th>Plate</th><th>DPCN</th><th>Department</th><th>End-user</th><th>Requests</th><th>Remarks</th><th></th></tr></thead>
+          <tbody id="sparePartsBody"><tr><td colspan="8" class="empty">No spare parts requests yet</td></tr></tbody>
         </table>
       </div>
     </section>
@@ -338,10 +338,13 @@
     <div class="field"><label>Remarks</label><textarea id="spEditRemarks"></textarea></div>
     <div style="display:flex; gap:10px;">
       <button class="btn" id="spEditSaveBtn" onclick="saveSpareEdit()">Save Changes</button>
+      <button class="btn ghost" onclick="printSpareRequest()">Print</button>
       <button class="btn ghost" onclick="closeSpareModal()">Close</button>
     </div>
   </div>
 </div>
+
+<div id="printArea"></div>
 
 <script src="app.js"></script>
 </body>
