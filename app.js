@@ -226,6 +226,24 @@ function shortDept(d){
 function shortType(t){ return (t||'').replace(' Maintenance','').replace(' (minor jobs)',''); }
 function canManage(){ return role === 'Staff' || role === 'Supervisor'; }
 
+function escapeHtml(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Splits free-text into items (one per line; falls back to commas for
+// older single-line entries) and renders them as a bullet list.
+function renderRequestItems(text){
+  if(!text) return '—';
+  let items = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(items.length <= 1){
+    const commaSplit = text.split(',').map(s=>s.trim()).filter(Boolean);
+    if(commaSplit.length > 1) items = commaSplit;
+  }
+  if(!items.length) return '—';
+  if(items.length === 1) return escapeHtml(items[0]);
+  return '<ul style="margin:0; padding-left:18px;">' + items.map(i=>`<li>${escapeHtml(i)}</li>`).join('') + '</ul>';
+}
+
 function updatePlateList(){
   const plates = [...new Set(allRequests.map(r=>r.plate).filter(Boolean))].sort();
   const list = document.getElementById('plateList');
@@ -541,7 +559,7 @@ function renderSpareParts(){
       <td class="mono">${r.dpcn||'—'}</td>
       <td>${r.department||''}</td>
       <td>${r.end_user||'—'}</td>
-      <td class="notes-cell" title="${(r.requests||'').replace(/"/g,'&quot;')}">${r.requests||''}</td>
+      <td style="max-width:220px; font-size:12.5px;">${renderRequestItems(r.requests)}</td>
       <td class="notes-cell" title="${(r.remarks||'').replace(/"/g,'&quot;')}">${r.remarks||'—'}</td>
     </tr>`).join('');
 }
