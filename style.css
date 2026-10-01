@@ -110,6 +110,13 @@ textarea{ width:100%; padding:10px 12px; border:1px solid var(--line); border-ra
   @page{ margin:12mm; }
   body > *:not(#printArea){ display:none !important; }
   #printArea{ display:block !important; position:static; width:auto; padding:0; }
+  #printArea .p-letterhead{ display:flex; align-items:center; gap:16px; border-bottom:3px double #333; padding-bottom:10px; margin-bottom:10px; }
+  #printArea .p-letterhead img{ width:72px; height:72px; flex-shrink:0; object-fit:contain; }
+  #printArea .p-letterhead-text{ flex:1; text-align:center; }
+  #printArea .p-lh-line1{ font-size:12px; letter-spacing:.03em; }
+  #printArea .p-lh-line2{ font-size:16px; font-weight:700; margin-top:1px; }
+  #printArea .p-lh-line3{ font-size:14px; font-weight:700; margin-top:1px; }
+  #printArea .p-lh-line4{ font-size:11.5px; color:#444; margin-top:1px; }
   #printArea h2{ margin:0 0 2px; font-size:18px; }
   #printArea .p-sub{ color:#555; font-size:12px; margin:0 0 14px; }
   #printArea table{ width:100%; border-collapse:collapse; margin-top:6px; }
